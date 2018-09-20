@@ -53,8 +53,8 @@ public class SettingActivity extends BasicActivity {
     private FirebaseAuth mAuth;
     private Uri imagePostURI=null;
 
-    StorageReference mFirestorageREF;
-    FirebaseFirestore mFirestoreREF ;
+    private StorageReference mFirestorageREF;
+    private FirebaseFirestore mFirestoreREF ;
 
 
 
@@ -71,7 +71,7 @@ public class SettingActivity extends BasicActivity {
         mFirestorageREF=FirebaseStorage.getInstance().getReference();
 
 
-        String userId=getIntent().getStringExtra("userID");
+
         phoneUser.setText(mUser.getPhoneNumber());
 
         choisirPhotoBTN.setOnClickListener(new View.OnClickListener() {
@@ -132,21 +132,23 @@ public class SettingActivity extends BasicActivity {
                     String name=userNameZone.getEditText().getText().toString();
                     String addresse=adresseZone.getEditText().getText().toString();
                     String phone=mUser.getPhoneNumber();
-                    String imageUrl=task.getResult().getStorage().getDownloadUrl().toString();
+                   // String imageUrl=task.getResult().getDownloadUrl().toString();
 
                     Map<String,String> userMap= new HashMap<>();
                     userMap.put("role","user");
                     userMap.put("name",name);
                     userMap.put("addresse",addresse);
                     userMap.put("phone",phone);
-                    userMap.put("image",imageUrl);
-                    mFirestoreREF.collection("Users").add(userMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                  //  userMap.put("image",imageUrl);
+                    String userId=getIntent().getStringExtra("userID");
+                    mFirestoreREF.collection("Users").document(userId).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                        public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
-                                hideProgressDialog();
                                 goToPostActivity();
+                                hideProgressDialog();
                             }else {
+                                Toast.makeText(SettingActivity.this,"Error de creation de compte",Toast.LENGTH_LONG).show();
                                 hideProgressDialog();
                             }
                         }

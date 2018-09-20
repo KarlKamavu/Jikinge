@@ -3,42 +3,53 @@ package com.roonit.jikinge.models;
 import java.util.Date;
 
 public class Post {
-
-    private String image_url,user_id,message;
+    private String titre;
+    private String contenu;
+    private String auteurID;
+    private String image;
     private Date timestamp;
 
     public Post() {
     }
 
-    public Post(String image_url, String user_id, String message, Date timestamp) {
-        this.image_url = image_url;
-        this.user_id = user_id;
-        this.message = message;
+    public Post(String titre,String contenu, String auteurID, String image, Date timestamp) {
+        this.titre = titre;
+        this.contenu = contenu;
+        this.auteurID = auteurID;
+        this.image = image;
         this.timestamp = timestamp;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getTitre() {
+        return titre;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setTitre(String titre) {
+        this.titre = titre;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getContenu() {
+        return contenu;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setContenu(String contenu) {
+        this.contenu = contenu;
     }
 
-    public String getMessage() {
-        return message;
+    public String getAuteurID() {
+        return auteurID;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setAuteurID(String auteurID) {
+        this.auteurID = auteurID;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Date getTimestamp() {

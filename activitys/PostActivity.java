@@ -73,6 +73,7 @@ public class PostActivity extends BasicActivity {
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mUser!=null){
 
                 showProgressDialog("Suggestion","En cours d'envoie ...");
 
@@ -91,6 +92,7 @@ public class PostActivity extends BasicActivity {
                         }
                     }
                 });
+            }
             }
         });
 

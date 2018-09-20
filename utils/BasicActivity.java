@@ -18,6 +18,7 @@ public class BasicActivity extends AppCompatActivity {
     public void showProgressDialog(String titre,String message) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setCanceledOnTouchOutside(false);
             mProgressDialog.setTitle(titre);
             mProgressDialog.setMessage(message);
             mProgressDialog.setIndeterminate(true);

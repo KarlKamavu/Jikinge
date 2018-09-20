@@ -174,11 +174,13 @@ public class MainActivity extends BasicActivity {
     private void signIn() {
         List<AuthUI.IdpConfig> providers = Arrays.asList(
 
-                new AuthUI.IdpConfig.PhoneBuilder().build());
+                new AuthUI.IdpConfig.PhoneBuilder().setDefaultCountryIso("cd").build());
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
+
                         .setAvailableProviders(providers)
+
                         .build(),
                 RC_SIGN_IN);
     }@Override
@@ -202,7 +204,7 @@ public class MainActivity extends BasicActivity {
         String userID=user.getUid();
         Intent settingIntent=new Intent(MainActivity.this,SettingActivity.class);
         settingIntent.putExtra("userID",userID);
-        settingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        settingIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(settingIntent);
         finish();
 

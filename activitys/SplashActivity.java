@@ -37,7 +37,7 @@ public class SplashActivity extends BasicActivity {
     public void GotoMainActivity(){
 
         Intent settingIntent=new Intent(SplashActivity.this,MainActivity.class);
-        settingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+       // settingIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(settingIntent);
         finish();
 

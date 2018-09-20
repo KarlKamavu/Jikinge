@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.roonit.jikinge.models.Post;
 import com.roonit.jikinge.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -49,32 +50,22 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
     public void onBindViewHolder(final PostViewHolder holder, int position) {
     final Post post= postList.get(position);
 
-        holder.message.setText(post.getMessage());
-        holder.setImageView(context,post.getImage_url());
-        String user_id=postList.get(position).getUser_id();
-        Log.d("erreur",user_id);
+        holder.message.setText(post.getContenu());
+        holder.titre.setText(post.getTitre());
+        holder.setImageView(context,post.getImage());
+        String userID=postList.get(position).getAuteurID();
 
-        firebaseFirestore.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("Users").document(userID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot document=task.getResult();
-                    if (document.exists()){
-                        String username=task.getResult().getString("name");
-                        String userImage=task.getResult().getString("image");
-                        holder.setUserData(context,username,userImage);
-                    }else {
-                        holder.message.setText(post.getMessage());
-                        holder.setImageView(context,post.getImage_url());
-                        Log.d("Errrrrr","document deosnot exist");
-                    }
-
-
-                }else {
-                Log.d("ErrTask", "get failed with ", task.getException());
-            }
+                if (task.isSuccessful()){
+                    String userName=task.getResult().get("name").toString();
+                    String userAvatar=task.getResult().get("image").toString();
+                    holder.setUserData(context,userName,userAvatar);
+                }
             }
         });
+
 
         //date configuration
         long miliseconds=postList.get(position).getTimestamp().getTime();
@@ -92,7 +83,7 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
     public  class PostViewHolder extends RecyclerView.ViewHolder{
 
         private View mView;
-        private TextView message;
+        private TextView titre,message;
         private ImageView imageView;
         private TextView date,userName;
         private CircleImageView useravatar;
@@ -101,22 +92,24 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
         public PostViewHolder(View itemView) {
             super(itemView);
+
             mView=itemView;
+            titre=mView.findViewById(R.id.titre_post_item);
             message=mView.findViewById(R.id.blog_desc);
-           date=mView.findViewById(R.id.blog_date);
-           userName=mView.findViewById(R.id.username);
-           useravatar=mView.findViewById(R.id.userAvatar);
-
-
+            date=mView.findViewById(R.id.blog_date);
+            userName=mView.findViewById(R.id.username);
+            useravatar=mView.findViewById(R.id.userAvatar);
         }
 
         public  void setImageView(Context context,String downloadImage){
             imageView=mView.findViewById(R.id.blog_image);
-            Glide.with(context).load(downloadImage).into(imageView);
+            //Glide.with(context).load(downloadImage).into(imageView);
+            Picasso.get().load(downloadImage).into(imageView);
         }
         public void setUserData(Context context,String name, String image){
             userName.setText(name);
-            Glide.with(context).load(image).into(useravatar);
+           // Glide.with(context).load(image).into(useravatar);
+            Picasso.get().load(image).into(useravatar);
         }
 
 

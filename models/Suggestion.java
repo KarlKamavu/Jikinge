@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Suggestion {
 
-    private String auteur;
+    private String auteurID;
     private String titre;
     private String suggestion;
     private Date  timestamp;
@@ -13,18 +13,22 @@ public class Suggestion {
     }
 
     public Suggestion(String auteur, String titre, String suggestion, Date timestamp) {
-        this.auteur = auteur;
+        this.auteurID = auteur;
         this.titre = titre;
+
         this.suggestion = suggestion;
         this.timestamp = timestamp;
     }
 
-    public String getAuteur() {
-        return auteur;
+
+
+
+    public String getAuteurID() {
+        return auteurID;
     }
 
-    public void setAuteur(String auteur) {
-        this.auteur = auteur;
+    public void setAuteurID(String auteurID) {
+        this.auteurID = auteurID;
     }
 
     public String getTitre() {
